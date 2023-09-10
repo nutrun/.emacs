@@ -4,6 +4,10 @@
 (package-initialize)
 (package-refresh-contents)
 
+;; Installed packages:
+;; lsp-mode
+;; go-mode
+
 (savehist-mode 1)
 (put 'erase-buffer 'disabled nil)
 (setq make-backup-files nil)
@@ -11,25 +15,18 @@
 (setq-default indent-tabs-mode nil)
 (setq show-paren-delay 0)
 (show-paren-mode 1)
+;; Don't let custom/elpa append to init.el
+(setq custom-file "custom.el")
 
-(setq gofmt-command "/usr/local/go/bin/gofmt")
-(add-hook 'before-save-hook #'gofmt-before-save)
-(setq rust-rustfmt-bin "~/.cargo/bin/rustfmt")
-(setq rust-format-on-save t)
+(require 'lsp-mode)
+;; lsp/gopls
+(add-hook 'go-mode-hook #'lsp-deferred)
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
 (defun readlink-f ()
   "show current buffer's full path"
   (interactive)
   (message (buffer-file-name (current-buffer))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages '(rust-mode go-mode)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

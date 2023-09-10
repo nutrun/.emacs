@@ -1,2 +1,5 @@
 auto-save-list
 history
+elpa
+custom.el
+.lsp-session-v*
