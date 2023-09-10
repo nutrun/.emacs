@@ -1,12 +1,4 @@
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-(package-refresh-contents)
-
-;; Installed packages:
-;; lsp-mode
-;; go-mode
+(load "~/.emacs.d/init-packages")
 
 (savehist-mode 1)
 (put 'erase-buffer 'disabled nil)
